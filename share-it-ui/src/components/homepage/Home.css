@@ -1,0 +1,28 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-logo {
+    max-width: 20%;
+    max-height: 20%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    margin: 10px;
+}
