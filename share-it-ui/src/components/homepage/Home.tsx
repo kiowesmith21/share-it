@@ -2,7 +2,6 @@ import React from 'react';
 import './Home.css'
 import logo from './logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../navbar/Navbar';
 
 const Home = () => {
   return (
@@ -28,7 +27,9 @@ const Home = () => {
                 <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" />
             </div>
           </div>
-            <button type="button" className="btn btn-primary">Login</button>
+            <div>
+              <button type="button" className="btn btn-primary">Login</button>
+            </div>
             <button type="button" className="btn btn-primary">Register</button>
         </div>
       </div>

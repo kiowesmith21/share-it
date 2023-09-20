@@ -5,8 +5,8 @@
 }
 
 .home-logo {
-    max-width: 10%;
-    max-height: 10%;
+    max-width: 20%;
+    max-height: 20%;
 }
 
 .content {
@@ -14,4 +14,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    margin: 10px;
 }
