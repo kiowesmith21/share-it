@@ -1,0 +1,40 @@
+[
+  {
+    "userName": "ksmith21",
+    "password": "password123",
+    "following": [
+      "bob",
+      "jane"
+    ],
+    "postIds": []
+  },
+  {
+    "userName": "jane",
+    "password": "password124",
+    "following": [
+      "ksmith21",
+      "bob",
+      "demetrius"
+    ],
+    "postIds": []
+  },
+  {
+    "userName": "bob",
+    "password": "password125",
+    "following": [
+      "jane",
+      "ksmith21",
+      "demetrius"
+    ],
+    "postIds": []
+  },
+  {
+    "userName": "demetrius",
+    "password": "password126",
+    "following": [
+      "bob",
+      "jane"
+    ],
+    "postIds": []
+  }
+]
