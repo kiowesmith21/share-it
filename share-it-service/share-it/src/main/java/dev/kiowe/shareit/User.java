@@ -22,4 +22,9 @@ public class User {
     private List<String> following;
     @DocumentReference
     private List<Post> postIds;
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 }
