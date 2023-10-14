@@ -1,10 +1,17 @@
 import React from 'react';
+import axios from "axios";
 import './Register.css';
 import logo from '../homepage/logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+const baseURL = "http://localhost:8080/users";
 
 const Register = () => {
+
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
 
   let navigate = useNavigate();
 
@@ -13,7 +20,16 @@ const Register = () => {
   }
 
   const handleSubmit = () => {
-    console.log('You clicked submit.');
+    axios
+    .post(baseURL, {
+      userName: {userName},
+      password: {password}
+    })
+    .then(res => {
+      console.log(res);
+      console.log(res.data);
+    });
+    
   }
 
   return (
@@ -34,11 +50,11 @@ const Register = () => {
               <h1>Create Account</h1>
               <label className="form-label">Create Username:</label>
               <div className="input-group">
-                  <input type="text" className="form-control" id="username-input" aria-describedby="basic-addon3 basic-addon4" />
+                  <input type="text" className="form-control" id="username-input" aria-describedby="basic-addon3 basic-addon4" name="us" onChange={(e: any) => setUserName(e.target.value)}/>
               </div>
               <label className="form-label">Create Password:</label>
               <div className="input-group">
-                  <input type="text" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" />
+                  <input type="text" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" name="pw" onChange={(e: any) => setPassword(e.target.value)}/>
               </div>
             </div>
               <div>
