@@ -1,0 +1,28 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.post-logo {
+    max-width: 20%;
+    max-height: 20%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    margin: 10px;
+}

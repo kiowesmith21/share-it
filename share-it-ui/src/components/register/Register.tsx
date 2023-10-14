@@ -19,7 +19,7 @@ const Register = () => {
     navigate('/');
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     axios
     .post(baseURL, {
       userName: {userName},
@@ -28,7 +28,9 @@ const Register = () => {
     .then(res => {
       console.log(res);
       console.log(res.data);
-    });
+    }).catch((err) => {
+      console.log(err)
+  });
     
   }
 
@@ -54,7 +56,7 @@ const Register = () => {
               </div>
               <label className="form-label">Create Password:</label>
               <div className="input-group">
-                  <input type="text" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" name="pw" onChange={(e: any) => setPassword(e.target.value)}/>
+                  <input type="password" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" name="pw" onChange={(e: any) => setPassword(e.target.value)}/>
               </div>
             </div>
               <div>

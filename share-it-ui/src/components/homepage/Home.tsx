@@ -32,7 +32,7 @@ const Home = () => {
             </div>
             <label className="form-label">Password:</label>
             <div className="input-group">
-                <input type="text" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" />
+                <input type="password" className="form-control" id="password-input" aria-describedby="basic-addon3 basic-addon4" />
             </div>
           </div>
             <div>

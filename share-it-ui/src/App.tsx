@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './components/homepage/Home';
 import Register from './components/register/Register';
+import Post from './components/post/post';
 
 function App() {
   return (
