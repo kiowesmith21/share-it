@@ -3,7 +3,7 @@ import axios from "axios";
 import './Feed.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../navbar/Navbar';
 
 const baseURL = "http://localhost:8080/users";
@@ -11,13 +11,21 @@ const baseURL = "http://localhost:8080/users";
 const Feed = () => {
 
   const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [items, setItems] = useState<any[]>([])
 
   let navigate = useNavigate();
 
-  function backBtn() {
-    navigate('/');
-  }
+  const fetchData = async () => {
+    const result = await axios(
+      'http://localhost:8080/users',
+    )
+    .then((response) => setItems(response.data));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   return (
     <div className="register">
@@ -25,7 +33,9 @@ const Feed = () => {
         <Navbar />
       </header>
       <div className='content'>
-        feed
+        <div>
+          {items.length > 0 && items.map((item) => <p key={item.id}>{item.prod_name}</p>)}
+        </div>
       </div>
     </div>
   );

@@ -5,32 +5,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const baseURL = "http://localhost:8080/users/ksmith21";
-
 const Home = () => {
 
   let navigate = useNavigate();
 
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [reqPassword, setReqPassword] = useState();
 
   const handleSubmit = async () => {
     const userData = {
       userName: userName
     };
     //get user data by username, check if password matches
-    await axios
-    .get(`http://localhost:8080/users${userName}`)
+    axios
+    .get(`http://localhost:8080/users/${userName}`)
     .then(res => {
       console.log(res);
       console.log(res.data);
+      setReqPassword(res.data.password);
     }).catch((err) => {
       console.log(err)
   });
-  console.log('waht');
 
-    //if sucessful login:
-    //navigate('/feed');
+    if (password === reqPassword) {
+      //if sucessful login:
+      navigate('/feed');
+    }
   }
 
   function registerBtnClick() {
