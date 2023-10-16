@@ -4,7 +4,8 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './components/homepage/Home';
 import Register from './components/register/Register';
-import Post from './components/post/post';
+import Post from './components/post/Post' 
+import Feed from './components/feed/Feed';
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/post" element={<Post />} />
+        <Route path="/feed" element={<Feed />} />
     </Routes>
   </BrowserRouter>
   );

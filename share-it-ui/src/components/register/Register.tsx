@@ -20,11 +20,13 @@ const Register = () => {
   }
 
   const handleSubmit = async () => {
-    axios
-    .post(baseURL, {
-      userName: {userName},
-      password: {password}
-    })
+    const userData = {
+      userName: userName,
+      password: password
+    };
+
+    await axios
+    .post(baseURL, userData)
     .then(res => {
       console.log(res);
       console.log(res.data);
