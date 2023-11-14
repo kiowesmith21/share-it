@@ -19,7 +19,8 @@ const Register = () => {
     navigate('/');
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     const userData = {
       userName: userName,
       password: password

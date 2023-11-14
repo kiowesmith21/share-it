@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Home.css'
 import logo from './logo.svg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUserContext } from '../config/UserContext';
 
 const Home = () => {
 
   let navigate = useNavigate();
 
-  const [userName, setUserName] = useState();
+  const { userName, updateUser } = useUserContext();
+
+  // const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [reqPassword, setReqPassword] = useState();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     const userData = {
       userName: userName
     };
@@ -24,14 +28,15 @@ const Home = () => {
       console.log(res);
       console.log(res.data);
       setReqPassword(res.data.password);
+
+      if (password === reqPassword) {
+        //if sucessful login:
+        navigate('/feed');
+      } 
+
     }).catch((err) => {
       console.log(err)
   });
-
-    if (password === reqPassword) {
-      //if sucessful login:
-      navigate('/feed');
-    }
   }
 
   function registerBtnClick() {
@@ -55,7 +60,7 @@ const Home = () => {
           <div className="mb-3">
             <label className="form-label">Username:</label>
             <div className="input-group">
-                <input type="text" className="form-control" id="username-input" aria-describedby="basic-addon3 basic-addon4" name="us" onChange={(e: any) => setUserName(e.target.value)}/>
+                <input type="text" className="form-control" id="username-input" aria-describedby="basic-addon3 basic-addon4" name="us" onChange={(e: any) => updateUser(e.target.value)}/>
             </div>
             <label className="form-label">Password:</label>
             <div className="input-group">
