@@ -1,5 +1,5 @@
 import React from 'react';
-import './post.css'
+import './Post.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 import Navbar from '../navbar/Navbar';
