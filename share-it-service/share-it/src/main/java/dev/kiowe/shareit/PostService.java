@@ -1,10 +1,13 @@
 package dev.kiowe.shareit;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -24,6 +27,10 @@ public class PostService {
                 .first();
 
         return post;
+    }
+
+    public Optional<Post> getPost(ObjectId id) {
+        return postRepository.findById(id);
     }
 
 }

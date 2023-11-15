@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<UserContextProvider><Home /></UserContextProvider>} />
         <Route path="/register" element={<Register />} />
         <Route path="/post" element={<Post />} />
-        <Route path="/feed" element={<Feed />} />
+        <Route path="/feed" element={<UserContextProvider><Feed /></UserContextProvider>} />
     </Routes>
   </BrowserRouter>
   );
