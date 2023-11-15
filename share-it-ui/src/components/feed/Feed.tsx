@@ -1,87 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './Feed.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Navbar from '../navbar/Navbar';
 import { useUserContext } from '../config/UserContext';
 
 const Feed = () => {
-
-  const { userName, updateUser } = useUserContext();
-
-  const [ following, setFollowing ] = useState<string[] | undefined>(undefined);
-  const [ postIds, setPostIds ] = useState<string[] | undefined>(undefined);
-  // const [items, setItems] = useState<any[]>([])
-
-  let navigate = useNavigate();
+  const { userName } = useUserContext();
+  const [following, setFollowing] = useState<string[] | undefined>(undefined);
+  const [posts, setPosts] = useState<any[]>([]); // State to store the posts
 
   const getFollowing = async () => {
-    const result = await axios(
-      `http://localhost:8080/users/${userName}`,
-    )
-      .then(res => {
-          setFollowing(res.data.following);
-          console.log(following);
-      })
-    // .then((res) => setItems(res.data));
+    const result = await axios.get(`http://localhost:8080/users/${userName}`);
+    setFollowing(result.data.following);
   };
 
-  const getPostIds = async (name: string) => {
-    const result = await axios(
-      `http://localhost:8080/users/${name}`,
-    )
-      .then(res => {
-          setPostIds(res.data.postIds);
-          console.log(postIds); 
-      })
+  const getPosts = async (name: string) => {
+    const result = await axios.get(`http://localhost:8080/users/${name}`);
+    setPosts([]); // Clear the posts state
+    setPosts(prevPosts => [...prevPosts, ...result.data.postIds]);
   };
-
-  const getPost = async (id: string) => {
-    const result = await axios(
-      `http://localhost:8080/posts/${id}`,
-    )
-      .then(res => {
-          console.log(res.data);
-      })
-  };
-
-  const getAllPosts = async () => {
-
-    await getFollowing();
-
-    if (following) {
-      for (let i = 0; i < following.length; i++) {
-        await getPostIds(following[i]);
-      }
-
-      if (postIds) {
-        for (let k = 0; k < postIds.length; k++) {
-          await getPost(postIds[k]);
-        }
-      }
-    }
-   };
 
   useEffect(() => {
-    getAllPosts();
-  }, []);
+    const getAllPosts = async () => {
+      if (!following) {
+        await getFollowing();
+      }
 
+      if (following) {
+        for (let i = 0; i < following.length; i++) {
+          await getPosts(following[i]);
+        }
+      }
+    };
+
+    getAllPosts();
+  }, [userName, following]);
 
   return (
-    <div className="register">
-      <header className="register-header">
+    <div className="feed-container">
+      <header className="feed-header">
         <Navbar />
       </header>
-      <div className='content'>
-        testing
-        {/* <div>
-          {items.length > 0 && items.map((item) => <p key={item.id}>{item.prod_name}</p>)}
-        </div> */}
+      <div className="feed-content">
+        <h2>Posts</h2>
+        {posts.map(post => (
+          <div key={post.id} className="post-card">
+            <div className="post-header">
+              <img src={post.userAvatar} alt="User Avatar" className="user-avatar" />
+              <p className="username">{post.username}</p>
+            </div>
+            <p className="post-body">{post.body}</p>
+            {post.img && <img src={post.img} alt="Post Image" className="post-image" />}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default Feed;
