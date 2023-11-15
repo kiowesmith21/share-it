@@ -5,25 +5,67 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from '../navbar/Navbar';
-
-const baseURL = "http://localhost:8080/users";
+import { useUserContext } from '../config/UserContext';
 
 const Feed = () => {
 
-  // const [userName, setUserName] = useState();
-  const [items, setItems] = useState<any[]>([])
+  const { userName, updateUser } = useUserContext();
+
+  const [ following, setFollowing ] = useState<string[] | undefined>(undefined);
+  const [ postIds, setPostIds ] = useState<string[] | undefined>(undefined);
+  // const [items, setItems] = useState<any[]>([])
 
   let navigate = useNavigate();
 
-  const fetchData = async () => {
+  const getFollowing = async () => {
     const result = await axios(
-      'http://localhost:8080/users',
+      `http://localhost:8080/users/${userName}`,
     )
-    .then((response) => setItems(response.data));
+      .then(res => {
+          setFollowing(res.data.following);
+          console.log(following);
+      })
+    // .then((res) => setItems(res.data));
   };
 
+  const getPostIds = async (name: string) => {
+    const result = await axios(
+      `http://localhost:8080/users/${name}`,
+    )
+      .then(res => {
+          setPostIds(res.data.postIds);
+          console.log(postIds); 
+      })
+  };
+
+  const getPost = async (id: string) => {
+    const result = await axios(
+      `http://localhost:8080/posts/${id}`,
+    )
+      .then(res => {
+          console.log(res.data);
+      })
+  };
+
+  const getAllPosts = async () => {
+
+    await getFollowing();
+
+    if (following) {
+      for (let i = 0; i < following.length; i++) {
+        await getPostIds(following[i]);
+      }
+
+      if (postIds) {
+        for (let k = 0; k < postIds.length; k++) {
+          await getPost(postIds[k]);
+        }
+      }
+    }
+   };
+
   useEffect(() => {
-    fetchData();
+    getAllPosts();
   }, []);
 
 
