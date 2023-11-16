@@ -9,20 +9,32 @@ const Feed = () => {
   const { userName } = useUserContext();
   const [following, setFollowing] = useState<string[] | undefined>(undefined);
   const [posts, setPosts] = useState<any[]>([]); // State to store the posts
+  const [loading, setLoading] = useState(true);
 
   const getFollowing = async () => {
+    try {
     const result = await axios.get(`http://localhost:8080/users/${userName}`);
     setFollowing(result.data.following);
+  } catch (error) {
+    console.error('Error fetching following:', error);
+  } 
   };
 
   const getPosts = async (name: string) => {
+    try {
     const result = await axios.get(`http://localhost:8080/users/${name}`);
     setPosts([]); // Clear the posts state
     setPosts(prevPosts => [...prevPosts, ...result.data.postIds]);
+  } catch (error) {
+    console.error('Error fetching post ids:', error);
+  }
   };
 
   useEffect(() => {
     const getAllPosts = async () => {
+      setLoading(true); // Set loading to true when starting to fetch data
+
+      try {
       if (!following) {
         await getFollowing();
       }
@@ -32,10 +44,18 @@ const Feed = () => {
           await getPosts(following[i]);
         }
       }
+    }
+    finally {
+    setLoading(false); // Set loading to false regardless of success or failure
+  }
     };
 
     getAllPosts();
   }, [userName, following]);
+
+  if (loading) {
+    return <p>Loading...</p>; // or display a loading spinner or other loading indicator
+  }
 
   return (
     <div className="feed-container">
@@ -47,7 +67,6 @@ const Feed = () => {
         {posts.map(post => (
           <div key={post.id} className="post-card">
             <div className="post-header">
-              <img src={post.userAvatar} alt="User Avatar" className="user-avatar" />
               <p className="username">{post.username}</p>
             </div>
             <p className="post-body">{post.body}</p>

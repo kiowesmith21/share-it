@@ -1,39 +1,58 @@
 import React from 'react';
-import './Post.css'
+import './Post.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 
 const Post = () => {
-
   let navigate = useNavigate();
 
   function postBtnClick() {
-    console.log("posted")
+    console.log('posted');
   }
 
   return (
-    <div className="post">
+    <div className="post-container">
       <header className="post-header">
         <Navbar />
       </header>
-      <div className='content'>
-        <div className='post-box'>
+      <div className="content">
+        <div className="post-box">
           <div className="mb-3">
-            <label className="form-label">Post:</label>
+            <label htmlFor="post-text" className="form-label">
+              Post:
+            </label>
             <div className="input-group">
-                <input type="text" className="form-control" id="username-input" aria-describedby="basic-addon3 basic-addon4" />
+              <textarea
+                className="form-control"
+                id="post-text"
+                rows={3}
+                placeholder="Write your post here..."
+              ></textarea>
             </div>
-            <label className="form-label">Upload Image:</label>
+            <label htmlFor="image-upload" className="form-label">
+              Upload Image:
+            </label>
             <div className="input-group">
-                <input type="text" className="form-control" id="post-text-input" aria-describedby="basic-addon3 basic-addon4" />
+              <input
+                type="file"
+                className="form-control"
+                id="image-upload"
+                aria-describedby="image-upload-addon"
+              />
             </div>
           </div>
-            <button type="button" className="btn btn-primary" onClick={postBtnClick}>Post</button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={postBtnClick}
+          >
+            Post
+          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Post;
