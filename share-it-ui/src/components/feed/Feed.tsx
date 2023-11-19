@@ -22,33 +22,37 @@ const Feed = () => {
 
   const getPosts = async (name: string) => {
     try {
-    const result = await axios.get(`http://localhost:8080/users/${name}`);
-    setPosts([]); // Clear the posts state
-    setPosts(prevPosts => [...prevPosts, ...result.data.postIds]);
-  } catch (error) {
-    console.error('Error fetching post ids:', error);
-  }
+      const result = await axios.get(`http://localhost:8080/users/${name}`);
+      const userPosts = result.data.postIds || [];
+      return userPosts;
+    } catch (error) {
+      console.error('Error fetching post ids:', error);
+      return [];
+    }
   };
 
   useEffect(() => {
     const getAllPosts = async () => {
-      setLoading(true); // Set loading to true when starting to fetch data
+  setLoading(true);
 
-      try {
-      if (!following) {
-        await getFollowing();
-      }
+  try {
+    if (!following) {
+      await getFollowing();
+    }
 
-      if (following) {
-        for (let i = 0; i < following.length; i++) {
-          await getPosts(following[i]);
-        }
+    const allPosts = [];
+    if (following) {
+      for (let i = 0; i < following.length; i++) {
+        const userPosts = await getPosts(following[i]);
+        allPosts.push(...userPosts);
       }
     }
-    finally {
-    setLoading(false); // Set loading to false regardless of success or failure
+
+    setPosts(allPosts);
+  } finally {
+    setLoading(false);
   }
-    };
+};
 
     getAllPosts();
   }, [userName, following]);

@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends MongoRepository<Post, ObjectId> {
 
-    Optional<Post> findUserById(ObjectId id);
+    Optional<Post> findPostById(ObjectId id);
 
 }
