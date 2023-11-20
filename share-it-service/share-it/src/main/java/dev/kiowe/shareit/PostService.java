@@ -19,7 +19,7 @@ public class PostService {
     private MongoTemplate mongoTemplate;
 
     public Post createPost(String userName, String postBody, String img) {
-        Post post = postRepository.insert(new Post(postBody, img));
+        Post post = postRepository.insert(new Post(postBody, img, userName));
 
         mongoTemplate.update(User.class)
                 .matching(Criteria.where("userName").is(userName))

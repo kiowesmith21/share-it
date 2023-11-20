@@ -26,11 +26,15 @@
   
   .post-header {
     display: flex;
+    background-color: #fff;
+    border: 1px solid black;
+    
     align-items: center;
   }
   
   .username {
     font-weight: bold;
+    color: black;
   }
   
   .post-body {

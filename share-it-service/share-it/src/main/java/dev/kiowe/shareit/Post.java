@@ -16,10 +16,12 @@ public class Post {
     private ObjectId id;
     private String body;
     private String img;
+    private String userName;
 
-    public Post(String body, String img) {
+    public Post(String body, String img, String userName) {
         this.body = body;
         this.img = img;
+        this.userName = userName;
     }
 
 }

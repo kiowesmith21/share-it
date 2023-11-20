@@ -55,6 +55,7 @@ const Feed = () => {
 };
 
     getAllPosts();
+    console.log(posts);
   }, [userName, following]);
 
   if (loading) {
@@ -71,7 +72,8 @@ const Feed = () => {
         {posts.map(post => (
           <div key={post.id} className="post-card">
             <div className="post-header">
-              <p className="username">{post.username}</p>
+              <p className="username">{post.userName}</p>
+              {/* <p className="likes">{post.likes}</p> */}
             </div>
             <p className="post-body">{post.body}</p>
             {post.img && <img src={post.img} alt="Post Image" className="post-image" />}
