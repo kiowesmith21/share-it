@@ -12,12 +12,14 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Routes>
-        <Route path="/" element={<UserContextProvider><Home /></UserContextProvider>} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/post" element={<UserContextProvider><Post /></UserContextProvider>} />
-        <Route path="/feed" element={<UserContextProvider><Feed /></UserContextProvider>} />
-    </Routes>
+    <UserContextProvider>
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/feed" element={<Feed />} />
+      </Routes>
+    </UserContextProvider>
   </BrowserRouter>
   );
 }

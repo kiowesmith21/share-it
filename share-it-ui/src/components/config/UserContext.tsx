@@ -1,39 +1,65 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, FC, useState } from 'react';
 
-// Define the shape of your context data
 interface UserContextData {
-  // Your context data here
   userName: string;
+  following: string[];
+  posts: any[];
   updateUser: (newUserName: string) => void;
+  updateFollowing: (newFollowing: string[]) => void;
+  updatePosts: (newPosts: any[]) => void;
 }
 
-// Create the context with an initial value (this will be used if a component is rendered outside the provider)
-const UserContext = createContext<UserContextData | undefined>(undefined);
+//Create the context with an initial value 
+// Create the context with a complete initial value
+const UserContext = createContext<UserContextData>({
+  userName: 'DefaultUser',
+  following: [''],
+  posts: [],
+  updateUser: () => {},
+  updateFollowing: () => {},
+  updatePosts: () => {},
+});
 
-// Create a provider component that will wrap your app
+
+//Create a provider component that wraps app
 interface UserContextProviderProps {
   children: ReactNode;
 }
 
-export const UserContextProvider: React.FC<UserContextProviderProps> = ({ children }) => {
-  // Your state or any other logic here
-  const [userName, setUserName] = React.useState('DefaultUser');
+export const UserContextProvider: FC<UserContextProviderProps> = ({ children }) => {
+  const [userName, setUserName] = useState('DefaultUser');
+  const [following, setFollowing] = useState(['']);
+  const [posts, setPosts] = useState([]);
 
-  // Function to update the username
+  //Function to update the username
   const updateUser = (newUserName: string) => {
     setUserName(newUserName);
   };
 
-  // Provide the context value to the components in the tree
+  //Function to update the following
+  const updateFollowing = (newFollowing: string[]) => {
+    setFollowing(newFollowing);
+  };
+
+  //Function to update the posts
+  const updatePosts = (newPosts: []) => {
+    setPosts(newPosts);
+  };
+
+  //Provide the context value to the components in the tree
   const contextValue: UserContextData = {
     userName,
+    following,
+    posts,
     updateUser,
+    updateFollowing,
+    updatePosts
   };
 
   return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
-// Create a custom hook to consume the context
+//custom hook to consume the context
 export const useUserContext = () => {
   const context = useContext(UserContext);
   if (!context) {
