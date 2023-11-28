@@ -29,7 +29,7 @@ interface UserContextProviderProps {
 export const UserContextProvider: FC<UserContextProviderProps> = ({ children }) => {
   const [userName, setUserName] = useState('DefaultUser');
   const [following, setFollowing] = useState(['']);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
 
   //Function to update the username
   const updateUser = (newUserName: string) => {
@@ -42,7 +42,7 @@ export const UserContextProvider: FC<UserContextProviderProps> = ({ children }) 
   };
 
   //Function to update the posts
-  const updatePosts = (newPosts: []) => {
+  const updatePosts = (newPosts: any[]) => {
     setPosts(newPosts);
   };
 

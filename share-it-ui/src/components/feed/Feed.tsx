@@ -7,25 +7,26 @@ import { useUserContext } from '../config/UserContext';
 
 const Feed = () => {
   const { userName } = useUserContext();
-  const [following, setFollowing] = useState<string[]>([]);
+  const { following, updateFollowing } = useUserContext();
+  // const [following, setFollowing] = useState<string[]>([]);
   const [posts, setPosts] = useState<any[]>([]); // State to store the posts
   const [loading, setLoading] = useState(true);
 
-  const getFollowing = async () => {
-    try {
-      const result = await axios.get(`http://localhost:8080/users/${userName}`);
-      console.log('Following data:', result.data);
+  // const getFollowing = async () => {
+  //   try {
+  //     const result = await axios.get(`http://localhost:8080/users/${userName}`);
+  //     console.log('Following data:', result.data);
   
-      if (result.data && result.data.following !== null) {
-        setFollowing(result.data.following);
-      } else {
-        setFollowing([]);
-      }
-    } catch (error) {
-      console.error('Error fetching following:', error);
-      setFollowing([]);
-    }
-  };  
+  //     if (result.data && result.data.following !== null) {
+  //       setFollowing(result.data.following);
+  //     } else {
+  //       setFollowing([]);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching following:', error);
+  //     setFollowing([]);
+  //   }
+  // };  
   
   const getPosts = async (name: string) => {
     try {
@@ -39,10 +40,12 @@ const Feed = () => {
   };
 
   useEffect(() => {
+    
     const getAllPosts = async () => {
       setLoading(true);
   
       try {
+
         if (following === undefined) {
           // Handle the case where following data is still loading
           console.log('Following data is still loading...');
@@ -75,8 +78,6 @@ const Feed = () => {
     getAllPosts();
   }, [userName, following]);
   
-  
-
   if (loading) {
     return <p>Loading...</p>; // or display a loading spinner or other loading indicator
   }

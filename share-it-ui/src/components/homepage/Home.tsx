@@ -11,6 +11,7 @@ const Home = () => {
   let navigate = useNavigate();
 
   const { userName, updateUser } = useUserContext();
+  const { following, updateFollowing } = useUserContext();
 
   // const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -28,7 +29,7 @@ const Home = () => {
       console.log(res);
       console.log(res.data);
       setReqPassword(res.data.password);
-
+      updateFollowing(res.data.following);
       if (password === reqPassword) {
         //if sucessful login:
         navigate('/feed');
